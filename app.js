@@ -1,6 +1,9 @@
-const { mostrarMenu, pausa } = require('./helpers/mensajes');
+import colors from "colors";
 
-require('colors');
+import { inquirerMenu } from "./helpers/inquirer.js";
+
+
+
 
 
 //limpia todo lo de la consola
@@ -14,9 +17,9 @@ const main = async() => {
     //BUcle que nos permite seguir ejecutando el programa siempre y cuando no se precione "0"
     do {
 
-        opt = await mostrarMenu()
+        opt = await inquirerMenu()
         console.log({opt});
-        if (opt !== '0') await pausa();
+        
 
     }while(opt !== '0');
 
