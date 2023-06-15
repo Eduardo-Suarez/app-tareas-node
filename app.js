@@ -2,6 +2,7 @@ import colors from "colors";
 
 import { inquirerMenu, pausa, leerInput } from "./helpers/inquirer.js";
 import {Tareas} from "./models/tareas.js";
+import { guardarDB, leerDB } from "./helpers/guardarArchivo.js";
 
 
 
@@ -12,11 +13,20 @@ console.clear();
 
 
 const main = async() => {
-    console.log("hola mundo");
+    
 
     let opt = "";
     const tareas = new Tareas();
-    //BUcle que nos permite seguir ejecutando el programa siempre y cuando no se precione "0"
+
+    const tareasDB = leerDB();
+
+    if (tareasDB){
+        //establecer tareas
+        tareas.cargarTareasFromArray(tareasDB);
+    }
+
+    
+    //Bucle que nos permite seguir ejecutando el programa siempre y cuando no se precione "0"
     do {
 
         opt = await inquirerMenu()
@@ -32,6 +42,9 @@ const main = async() => {
                 console.log(tareas._listado);
                 break;
         }
+
+
+        guardarDB(tareas.listadoArr);
 
 
         await pausa();
